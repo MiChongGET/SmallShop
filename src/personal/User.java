@@ -1,3 +1,5 @@
+package personal;
+
 /**
  *
  * 用户类
@@ -56,7 +58,7 @@ public class User {
 
     @Override
     public String toString() {
-        return "User{" +
+        return "personal.User{" +
                 "userName='" + userName + '\'' +
                 ", passWord='" + passWord + '\'' +
                 ", otherName='" + otherName + '\'' +

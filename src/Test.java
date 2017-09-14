@@ -1,3 +1,5 @@
+import show.ShowPage;
+
 /**
  *
  * 功能测试类
