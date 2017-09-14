@@ -3,7 +3,9 @@ import doing.Regist;
 import personal.User;
 import show.ShowPage;
 
-import java.util.*;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.Scanner;
 
 /**
  *
@@ -18,6 +20,9 @@ import java.util.*;
 public class Test {
     private static Scanner scanner;
     private static Map<String,User> users ;
+    private static boolean isDoing = true;
+    public static boolean isPage1 = true;
+    private static boolean isPage2 = true;
 
 
     public static void main(String[] args) {
@@ -26,14 +31,28 @@ public class Test {
 
         ShowPage.SHOW_PAGE.setShowPage();
 
-        while(true) {
-            System.out.println("请输入菜单：");
-            int n = scanner.nextInt();
-            userDoing(n);
+        while (isDoing) {
+            while (isPage1) {
+                System.out.println("请输入菜单：");
+                int n = scanner.nextInt();
+                userDoFirstPage(n,users);
+            }
+
+            while (isPage2){
+                System.out.println("请输入菜单：");
+                int n = scanner.nextInt();
+                userDoSecondPage(n);
+            }
+
+
         }
     }
 
-    public static void userDoing(int num){
+
+
+
+    //第一页面操作
+    public static void userDoFirstPage(int num, Map<String,User> users){
         switch (num){
             case 1:
                 System.out.println("请输入用户名：");
@@ -50,7 +69,16 @@ public class Test {
                     login_passwd = scanner.next();
                     login = Login.LOGIN.setLogin(users, login_name, login_passwd);
                 }
+
+                //退出第一面板
+                isPage1 = false;
+                isPage2 = true;
+
+                //展示下一面板
                 ShowPage.SHOW_PAGE.showPersonalPage();
+
+
+
                 break;
 
             case 2:
@@ -99,7 +127,7 @@ public class Test {
 
                 //使用Map存储用户信息，键是用户名，值是User对象
                 users.put(name,new User(name,passwd,otherName,age));
-               // System.out.println(users);
+                // System.out.println(users);
 
                 System.out.println("恭喜你注册成功！！！");
                 ShowPage.SHOW_PAGE.setShowPage();
@@ -115,4 +143,34 @@ public class Test {
         }
 
     }
+
+
+    //第二页面操作
+    public static void userDoSecondPage(int num){
+
+        switch (num){
+
+            case 1:
+                System.out.println("商品购买");
+
+                break;
+
+            case 2:
+                System.out.println("我的购物车");
+                break;
+
+            case 3:
+                System.out.println("个人信息");
+                break;
+
+            case 4:
+                isPage2 = false;
+                isPage1 = true;
+                ShowPage.SHOW_PAGE.setShowPage();
+                break;
+
+        }
+
+    }
+
 }
