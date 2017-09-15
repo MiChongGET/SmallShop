@@ -2,10 +2,11 @@ import doing.Login;
 import doing.Regist;
 import personal.User;
 import show.ShowPage;
+import store.BuyGoods;
+import store.Goods;
+import store.ShoppingCart;
 
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Scanner;
+import java.util.*;
 
 /**
  *
@@ -24,21 +25,47 @@ public class Test {
     public static boolean isPage1 = true;
     private static boolean isPage2 = true;
 
+    private static Map<Integer, Goods>goodsMap;
+
+    //静态初始化
+    static {
+
+        //仓库初始化,使用自然排序以key为关键字排序
+         goodsMap = new TreeMap<>(new Comparator<Integer>() {
+            @Override
+            public int compare(Integer o1, Integer o2) {
+                return (o1 - o2);
+            }
+        });
+        goodsMap.put(10101, new Goods(10101, "海尔冰箱", 3999.9, 50));
+        goodsMap.put(10102, new Goods(10102, "格力冰箱", 2888.8, 30));
+        goodsMap.put(10103, new Goods(10103, "TCL冰箱", 1999.8, 100));
+        goodsMap.put(10104, new Goods(10104, "美的冰箱", 4999.9, 60));
+        goodsMap.put(10201, new Goods(10201, "海尔空调", 3099.9, 50));
+        goodsMap.put(10202, new Goods(10202, "格力空调", 2808.8, 40));
+        goodsMap.put(10203, new Goods(10203, "TCL空调", 1099.8, 120));
+        goodsMap.put(10204, new Goods(10204, "美的空调", 4909.9, 655));
+    }
 
     public static void main(String[] args) {
         scanner  = new Scanner(System.in);
         users = new HashMap<>();
 
-        ShowPage.SHOW_PAGE.setShowPage();
+
 
         while (isDoing) {
-            while (isPage1) {
-                System.out.println("请输入菜单：");
-                int n = scanner.nextInt();
-                userDoFirstPage(n,users);
-            }
+
+//            while (isPage1) {
+//            ShowPage.SHOW_PAGE.setShowPage();
+//                System.out.println("请输入菜单：");
+//                int n = scanner.nextInt();
+//                userDoFirstPage(n,users);
+//            }
 
             while (isPage2){
+
+                //展示下一面板
+                ShowPage.SHOW_PAGE.showPersonalPage();
                 System.out.println("请输入菜单：");
                 int n = scanner.nextInt();
                 userDoSecondPage(n);
@@ -74,8 +101,7 @@ public class Test {
                 isPage1 = false;
                 isPage2 = true;
 
-                //展示下一面板
-                ShowPage.SHOW_PAGE.showPersonalPage();
+
 
 
 
@@ -130,7 +156,6 @@ public class Test {
                 // System.out.println(users);
 
                 System.out.println("恭喜你注册成功！！！");
-                ShowPage.SHOW_PAGE.setShowPage();
                 break;
 
 
@@ -139,9 +164,7 @@ public class Test {
                 System.exit(0);
                 break;
 
-
         }
-
     }
 
 
@@ -151,7 +174,8 @@ public class Test {
         switch (num){
 
             case 1:
-                System.out.println("商品购买");
+
+                BuyGoods.SHOPPING_CART.showGoods(goodsMap);
 
                 break;
 
@@ -166,7 +190,6 @@ public class Test {
             case 4:
                 isPage2 = false;
                 isPage1 = true;
-                ShowPage.SHOW_PAGE.setShowPage();
                 break;
 
         }
