@@ -37,4 +37,12 @@ public enum  ShowPage {
         System.out.println("******************电器商城********************");
 
     }
+
+    public void showBuyGoods(){
+        System.out.println("商品编号        商品名称        商品价格        商品库存");
+    }
+
+    public void showShoppingCart(){
+        System.out.println("商品编号        商品名称        商品价格        购买数量        购买时间");
+    }
 }

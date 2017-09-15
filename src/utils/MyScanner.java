@@ -16,6 +16,7 @@ public enum  MyScanner  {
     private static  Scanner input  = new Scanner(System.in);
     private static int temp = 0;
     private static String s = "";
+    private static double d = 0;
 
     //获取输入的数字
     public int  getInt(){
@@ -45,5 +46,19 @@ public enum  MyScanner  {
             }
         }
         return s;
+    }
+
+    //获取输入的double类型
+    public double  getDouble(){
+        while (true){
+            try {
+                d = input.nextDouble();
+                break;
+            }catch (Exception e){
+                input = new Scanner(System.in);
+                System.out.println("输入类型不匹配！重新输入");
+            }
+        }
+        return d;
     }
 }
