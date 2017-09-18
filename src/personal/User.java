@@ -1,5 +1,7 @@
 package personal;
 
+import java.io.Serializable;
+
 /**
  *
  * 用户类
@@ -7,7 +9,10 @@ package personal;
  *
  */
 
-public class User {
+public class User  implements Serializable{
+
+    private static final long serialVersionUID = 2308311270885377533L;
+
     private String userName;
     private String passWord;
     private String otherName;
