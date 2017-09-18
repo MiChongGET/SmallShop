@@ -1,6 +1,8 @@
 import personal.User;
+import store.Goods;
 
 import java.io.*;
+import java.util.Map;
 
 /**
  *
@@ -15,6 +17,7 @@ import java.io.*;
 
 public class Test2 {
     public static void main(String[] args) throws IOException, ClassNotFoundException {
+
 
 
         FileWriter fw = new FileWriter("regist.txt");
@@ -65,12 +68,29 @@ public class Test2 {
             }
         }
 
-//        Object o1 = ois.readObject();
+
+        ois.close();
+
+        ObjectInputStream ois2 = new ObjectInputStream(new FileInputStream("goods.txt"));
+        while (true){
+
+            try{
+
+                Map<Integer,Goods> goodsMap = (Map<Integer, Goods>) ois2.readObject();
+                System.out.println(goodsMap);
+            }catch (EOFException E){
+
+            }catch (NullPointerException e){
+
+            }
+        }
+
+        //        Object o1 = ois.readObject();
 //        System.out.println(o1);
 
 //        ois.readObject();
 //        System.out.println( ois.readObject());
 
-        ois.close();
+
     }
 }

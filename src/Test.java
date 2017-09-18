@@ -8,6 +8,10 @@ import store.Goods;
 import store.ShoppingCart;
 import utils.MyScanner;
 
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.ObjectOutputStream;
 import java.util.*;
 
 /**
@@ -20,7 +24,7 @@ import java.util.*;
  */
 
 
-public class Test {
+public class Test  {
 
     private static Map<String,User> users ;//用户对象，用户信息存储区
     private static String name;
@@ -34,13 +38,14 @@ public class Test {
     //静态初始化
     static {
 
+        File f1 = new File("goods.txt");
+        try {
+            f1.createNewFile();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
         //仓库初始化,使用自然排序以key为关键字排序
-         goodsMap = new TreeMap<>(new Comparator<Integer>() {
-            @Override
-            public int compare(Integer o1, Integer o2) {
-                return (o1 - o2);
-            }
-        });
+         goodsMap = new HashMap<>();
         goodsMap.put(10101, new Goods(10101, "海尔冰箱", 3999.9, 50));
         goodsMap.put(10102, new Goods(10102, "格力冰箱", 2888.8, 30));
         goodsMap.put(10103, new Goods(10103, "TCL冰箱", 1999.8, 100));
@@ -51,6 +56,19 @@ public class Test {
         goodsMap.put(10204, new Goods(10204, "美的空调", 4909.9, 655));
 
 
+        //初始化数据
+        ObjectOutputStream ops = null;
+        try {
+            ops = new ObjectOutputStream(new FileOutputStream("goods.txt"));
+            ops.writeObject(goodsMap);
+            ops.flush();
+            ops.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+
+
 
         //购物车初始化
         shoppingCart = new TreeMap<Integer, MyGoods>();
@@ -58,9 +76,8 @@ public class Test {
         shoppingCart.put(10104,new MyGoods(10104, "美的空调", 4909.9, 8,"2017-09-15 16:09:00"));
     }
 
-    public static void main(String[] args) {
+    public static void main(String[] args) throws IOException {
         users = new HashMap<>();
-
 
 
         while (isDoing) {

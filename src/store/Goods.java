@@ -1,5 +1,7 @@
 package store;
 
+import java.io.Serializable;
+
 /**
  *
  * 商品类
@@ -7,11 +9,13 @@ package store;
  *
  *
  */
-public class Goods {
+public class Goods implements Serializable{
     private int no;//编号
     private String name;//商品名称
     private double price;//商品价格
     private int number;//商品数量
+
+    private static final long serialVersionUID = 1L;
 
             //初始化数据方法
     public  Goods(int iNo, String sName, double dPrice, int iNumber) {
