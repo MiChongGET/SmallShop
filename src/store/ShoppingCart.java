@@ -23,8 +23,6 @@ public enum  ShoppingCart {
         ShowPage.SHOW_PAGE.showShoppingCart();
 
 
-
-
         //重新整理数据，按照时间从现在往之前排序
         if (shoppingCart != null) {
             List<Map.Entry<Integer, MyGoods>> list = new ArrayList<Map.Entry<Integer, MyGoods>>(shoppingCart.entrySet());
