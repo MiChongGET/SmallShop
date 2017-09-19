@@ -1,5 +1,6 @@
 import doing.Login;
 import doing.Regist;
+import firstrun.FirstRun;
 import personal.MyGoods;
 import personal.User;
 import show.ShowPage;
@@ -32,48 +33,16 @@ public class Test  {
     public static boolean isPage1 = true;
     private static boolean isPage2 = true;
 
-    private static Map<Integer, Goods>goodsMap;
+    private static Map<Integer, Goods> goodsMap;
     private static Map<Integer, MyGoods> shoppingCart;
-
-    //静态初始化
     static {
-
-        File f1 = new File("goods.txt");
         try {
-            f1.createNewFile();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        //仓库初始化,使用自然排序以key为关键字排序
-         goodsMap = new HashMap<>();
-        goodsMap.put(10101, new Goods(10101, "海尔冰箱", 3999.9, 50));
-        goodsMap.put(10102, new Goods(10102, "格力冰箱", 2888.8, 30));
-        goodsMap.put(10103, new Goods(10103, "TCL冰箱", 1999.8, 100));
-        goodsMap.put(10104, new Goods(10104, "美的冰箱", 4999.9, 60));
-        goodsMap.put(10201, new Goods(10201, "海尔空调", 3099.9, 50));
-        goodsMap.put(10202, new Goods(10202, "格力空调", 2808.8, 40));
-        goodsMap.put(10203, new Goods(10203, "TCL空调", 1099.8, 120));
-        goodsMap.put(10204, new Goods(10204, "美的空调", 4909.9, 655));
-
-
-        //初始化数据
-        ObjectOutputStream ops = null;
-        try {
-            ops = new ObjectOutputStream(new FileOutputStream("goods.txt"));
-            ops.writeObject(goodsMap);
-            ops.flush();
-            ops.close();
+            goodsMap = FirstRun.FIRST_RUN.getGoodsMap();
+            shoppingCart = FirstRun.FIRST_RUN.getShoppingCart();
         } catch (IOException e) {
             e.printStackTrace();
         }
 
-
-
-
-        //购物车初始化
-        shoppingCart = new TreeMap<Integer, MyGoods>();
-        shoppingCart.put(10101,new MyGoods(10101, "海尔冰箱", 3999.9, 10,"2017-09-15 15:09:00"));
-        shoppingCart.put(10104,new MyGoods(10104, "美的空调", 4909.9, 8,"2017-09-15 16:09:00"));
     }
 
     public static void main(String[] args) throws IOException {

@@ -1,9 +1,19 @@
 package personal;
 
+import java.io.Serializable;
+
 /**
  * Created by MiChong on 2017/9/15 0015.
+ *
+ * 购物车商品类
+ *
+ * @author MiChong
+ *
  */
-public class MyGoods {
+public class MyGoods implements Serializable{
+
+    private static final long serialVersionUID = 2L;//必须定义一个常量
+
     private int no;//编号
     private String name;//商品名称
     private double price;//商品价格

@@ -1,4 +1,5 @@
 import personal.User;
+import store.BuyGoods;
 import store.Goods;
 
 import java.io.*;
@@ -20,10 +21,10 @@ public class Test2 {
 
 
 
-        FileWriter fw = new FileWriter("regist.txt");
+        FileWriter fw = new FileWriter("src/file/regist.txt");
 
         //将对象使用序列化的形式写入到文件中
-        ObjectOutputStream ops = new ObjectOutputStream(new FileOutputStream("regist.txt"));
+        ObjectOutputStream ops = new ObjectOutputStream(new FileOutputStream("src/file/regist.txt"));
         User user = new User("michong","123456","米虫",21);
         User user2 = new User("qjzxzxd","123456","米虫",20);
         ops.writeObject(user);
@@ -52,7 +53,7 @@ public class Test2 {
          * 流的关闭。 }
          */
 
-        ObjectInputStream ois = new ObjectInputStream(new FileInputStream("regist.txt"));
+        ObjectInputStream ois = new ObjectInputStream(new FileInputStream("src/file/regist.txt"));
 
 
 
@@ -70,20 +71,22 @@ public class Test2 {
 
 
         ois.close();
-
-        ObjectInputStream ois2 = new ObjectInputStream(new FileInputStream("goods.txt"));
+        Map<Integer,Goods> goodsMap = null;
+        ObjectInputStream ois2 = new ObjectInputStream(new FileInputStream("src/file/goods.txt"));
         while (true){
 
             try{
 
-                Map<Integer,Goods> goodsMap = (Map<Integer, Goods>) ois2.readObject();
-                System.out.println(goodsMap);
+                goodsMap= (Map<Integer, Goods>) ois2.readObject();
+                BuyGoods.BUY_GOODS.showGoods(goodsMap);
+                break;
             }catch (EOFException E){
 
             }catch (NullPointerException e){
 
             }
         }
+
 
         //        Object o1 = ois.readObject();
 //        System.out.println(o1);
