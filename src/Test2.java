@@ -1,8 +1,12 @@
 import personal.User;
 import store.BuyGoods;
 import store.Goods;
+import utils.MyObject;
 
 import java.io.*;
+import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -19,7 +23,7 @@ import java.util.Map;
 public class Test2 {
     public static void main(String[] args) throws IOException, ClassNotFoundException {
 
-
+        MyObject object = new MyObject();
 
         FileWriter fw = new FileWriter("src/file/regist.txt");
 
@@ -27,9 +31,22 @@ public class Test2 {
         ObjectOutputStream ops = new ObjectOutputStream(new FileOutputStream("src/file/regist.txt"));
         User user = new User("michong","123456","米虫",21);
         User user2 = new User("qjzxzxd","123456","米虫",20);
-        ops.writeObject(user);
-        ops.writeObject(user2);
-        ops.close();
+
+
+
+//        ops.writeObject(user);
+//        ops.close();
+
+//        ops.writeObject(user2);
+//        ops.close();
+
+        object.Write(user,"src/file/regist.txt",true);
+//        object.Write(user,"src/file/regist.txt",true);
+
+
+        List<User> userList = new ArrayList<>();
+
+
 
         //将对象按照反序列化的形式读出来
 
@@ -42,7 +59,7 @@ public class Test2 {
          * 代码结构如下：(无论是readInt()读int，还是readObject()读对象)
          * try{
          *  while(true) {
-         *   Object o=ois.radObject();
+         *   MyObject o=ois.radObject();
          *   处理已读出的对象o;
          *   }
          *  }
@@ -57,42 +74,54 @@ public class Test2 {
 
 
 
-        while (true){
-            try {
-                User u  = (User) ois.readObject();
-                System.out.println(u.toString());
-                if (u.getUserName().equals("michong")) break;
-            }catch (EOFException e){
-                break;
-            }catch (NullPointerException e) {
-                continue;
-            }
-        }
+//        while (true){
+//            try {
+//                User u  = (User) ois.readObject();
+//                System.out.println(u.toString());
+//                if (u.getUserName().equals("michong")) break;
+//            }catch (EOFException e){
+//                break;
+//            }catch (NullPointerException e) {
+//                continue;
+//            }
+//        }
 
 
-        ois.close();
+//        ois.close();
         Map<Integer,Goods> goodsMap = null;
-        ObjectInputStream ois2 = new ObjectInputStream(new FileInputStream("src/file/goods.txt"));
-        while (true){
+//        ObjectInputStream ois2 = new ObjectInputStream(new FileInputStream("src/file/goods.txt"));
+//        while (true){
+//
+//            try{
+//
+//                goodsMap= (Map<Integer, Goods>) ois2.readObject();
+//                BuyGoods.BUY_GOODS.showGoods(goodsMap);
+//                break;
+//            }catch (EOFException E){
+//
+//            }catch (NullPointerException e){
+//
+//            }
+//        }
 
-            try{
 
-                goodsMap= (Map<Integer, Goods>) ois2.readObject();
-                BuyGoods.BUY_GOODS.showGoods(goodsMap);
-                break;
-            }catch (EOFException E){
 
-            }catch (NullPointerException e){
+        Map<Integer, Goods> read = object.Read(goodsMap, "src/file/goods.txt");
+        BuyGoods.BUY_GOODS.showGoods(read);
 
-            }
+        List<User> users = object.ReadUser(userList, "src/file/regist.txt");
+//        System.out.println(users.toString());
+
+        Iterator<User> iterator = users.iterator();
+
+        while (iterator.hasNext()){
+
+            User u = iterator.next();
+            System.out.println(u.toString());
         }
 
+//        object.Read()
 
-        //        Object o1 = ois.readObject();
-//        System.out.println(o1);
-
-//        ois.readObject();
-//        System.out.println( ois.readObject());
 
 
     }

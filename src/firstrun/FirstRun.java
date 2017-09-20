@@ -1,13 +1,11 @@
 package firstrun;
 
 import personal.MyGoods;
-import store.BuyGoods;
 import store.Goods;
 
 import java.io.*;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.TreeMap;
 
 public enum FirstRun {
 
