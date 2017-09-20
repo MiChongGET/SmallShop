@@ -24,23 +24,35 @@ public class Test2 {
     public static void main(String[] args) throws IOException, ClassNotFoundException {
 
         MyObject object = new MyObject();
+        List<User> regist = new ArrayList<>();
 
         FileWriter fw = new FileWriter("src/file/regist.txt");
 
         //将对象使用序列化的形式写入到文件中
-        ObjectOutputStream ops = new ObjectOutputStream(new FileOutputStream("src/file/regist.txt"));
+        ObjectOutputStream ops = new ObjectOutputStream(new FileOutputStream("src/file/regist.txt",true));
         User user = new User("michong","123456","米虫",21);
         User user2 = new User("qjzxzxd","123456","米虫",20);
 
 
-
+//
 //        ops.writeObject(user);
-//        ops.close();
+ //       ops.writeObject(user2);
+//
 
-//        ops.writeObject(user2);
-//        ops.close();
+        regist.add(user);
+        regist.add(user2);
 
-        object.Write(user,"src/file/regist.txt",true);
+//        ops.writeObject(regist);
+        object.Write(regist,"src/file/regist.txt");
+
+        ops.close();
+
+        User u = null;
+
+//        User read1 = object.Read(u, "src/file/regist.txt");
+//        System.out.println(read1);
+
+//        object.WriteUser(user,"src/file/regist.txt",true);
 //        object.Write(user,"src/file/regist.txt",true);
 
 
@@ -70,15 +82,13 @@ public class Test2 {
          * 流的关闭。 }
          */
 
-        ObjectInputStream ois = new ObjectInputStream(new FileInputStream("src/file/regist.txt"));
-
-
-
+//        ObjectInputStream ois = new ObjectInputStream(new FileInputStream("src/file/regist.txt"));
+//
+//        List<User> list ;
 //        while (true){
 //            try {
-//                User u  = (User) ois.readObject();
-//                System.out.println(u.toString());
-//                if (u.getUserName().equals("michong")) break;
+//                list= (List<User>) ois.readObject();
+//                System.out.println(list.toString());
 //            }catch (EOFException e){
 //                break;
 //            }catch (NullPointerException e) {
@@ -109,18 +119,17 @@ public class Test2 {
         Map<Integer, Goods> read = object.Read(goodsMap, "src/file/goods.txt");
         BuyGoods.BUY_GOODS.showGoods(read);
 
-        List<User> users = object.ReadUser(userList, "src/file/regist.txt");
+        List<User> users = object.Read(userList, "src/file/regist.txt");
 //        System.out.println(users.toString());
 
         Iterator<User> iterator = users.iterator();
 
         while (iterator.hasNext()){
 
-            User u = iterator.next();
-            System.out.println(u.toString());
+            User user1 = iterator.next();
+            System.out.println(user1.toString());
         }
 
-//        object.Read()
 
 
 
