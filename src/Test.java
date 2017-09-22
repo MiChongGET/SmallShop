@@ -7,6 +7,7 @@ import show.ShowPage;
 import store.BuyGoods;
 import store.Goods;
 import store.ShoppingCart;
+import utils.MD5Utils;
 import utils.MyObject;
 import utils.MyScanner;
 
@@ -89,6 +90,7 @@ public class Test  {
                     String login_name = MyScanner.MY_SCANNER.getString();
                     System.out.println("请输入密码：");
                     String login_passwd = MyScanner.MY_SCANNER.getString();
+                    login_passwd = MD5Utils.md5Password(login_passwd);
                     login = Login.LOGIN.setLogin(users, login_name, login_passwd);
                 }
 
@@ -147,6 +149,8 @@ public class Test  {
                 // System.out.println(users);
 
                 //用户注册信息写入到文件
+                passwd = MD5Utils.md5Password(passwd);
+
                 Regist.REGIST.writeUser(new User(name,passwd,otherName,age));
                 System.out.println("恭喜你注册成功！！！");
                 break;
