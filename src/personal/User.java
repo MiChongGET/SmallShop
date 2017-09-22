@@ -13,10 +13,12 @@ public class User  implements Serializable{
 
     private static final long serialVersionUID = 2308311270885377533L;
 
-    private String userName;
-    private String passWord;
-    private String otherName;
-    private int age;
+    private String userName;//用户名
+    private String passWord;//用户密码
+    private String otherName;//昵称
+    private int age;//用户年龄
+    private double money ;//使用金额
+    private double account;//账户金额
 
     public User(){
 
@@ -61,14 +63,12 @@ public class User  implements Serializable{
         this.age = age;
     }
 
-    @Override
-    public String toString() {
-        return "personal.User{" +
-                "userName='" + userName + '\'' +
-                ", passWord='" + passWord + '\'' +
-                ", otherName='" + otherName + '\'' +
-                ", age=" + age +
-                '}';
+    public double getMoney() {
+        return money;
+    }
+
+    public void setMoney(double money) {
+        this.money = money;
     }
 
     @Override
@@ -79,6 +79,7 @@ public class User  implements Serializable{
         User user = (User) o;
 
         if (age != user.age) return false;
+        if (Double.compare(user.money, money) != 0) return false;
         if (userName != null ? !userName.equals(user.userName) : user.userName != null) return false;
         if (passWord != null ? !passWord.equals(user.passWord) : user.passWord != null) return false;
         return otherName != null ? otherName.equals(user.otherName) : user.otherName == null;
@@ -86,10 +87,25 @@ public class User  implements Serializable{
 
     @Override
     public int hashCode() {
-        int result = userName != null ? userName.hashCode() : 0;
+        int result;
+        long temp;
+        result = userName != null ? userName.hashCode() : 0;
         result = 31 * result + (passWord != null ? passWord.hashCode() : 0);
         result = 31 * result + (otherName != null ? otherName.hashCode() : 0);
         result = 31 * result + age;
+        temp = Double.doubleToLongBits(money);
+        result = 31 * result + (int) (temp ^ (temp >>> 32));
         return result;
+    }
+
+    @Override
+    public String toString() {
+        return "User{" +
+                "userName='" + userName + '\'' +
+                ", passWord='" + passWord + '\'' +
+                ", otherName='" + otherName + '\'' +
+                ", age=" + age +
+                ", money=" + money +
+                '}';
     }
 }

@@ -1,9 +1,11 @@
 package doing;
 
 import personal.User;
+import utils.MyObject;
 
-import java.util.Map;
-import java.util.Set;
+import java.io.File;
+import java.io.IOException;
+import java.util.*;
 
 /**
  *
@@ -64,5 +66,20 @@ public enum Regist {
         return true;
     }
 
+    public void writeUser(User user) throws IOException {
+
+
+        Map<String,User> map = new HashMap<>();
+
+        //判断文件是否存在并且是否为空
+        File f = new File("src/file/regist.txt");
+        if (f.exists() && f.length() >0) {
+            map = MyObject.MY_OBJECT.Read(map, "src/file/regist.txt");
+        }
+        map.put(user.getUserName(),user);
+        MyObject.MY_OBJECT.Write(map,"src/file/regist.txt");
+
+
+    }
 
 }

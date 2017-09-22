@@ -16,11 +16,11 @@ import java.util.List;
  */
 
 
-public class MyObject {
+public enum  MyObject {
 
+    MY_OBJECT;
 
     public <T>T Read(T t,String fileName) throws IOException {
-
 
         InputStream is = new FileInputStream(fileName);
 

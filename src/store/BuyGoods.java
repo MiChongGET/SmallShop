@@ -1,10 +1,14 @@
 package store;
 
 import personal.MyGoods;
+import personal.User;
 import show.ShowPage;
+import utils.MyObject;
 import utils.MyScanner;
 import utils.TimeUtils;
 
+import java.io.IOException;
+import java.util.HashMap;
 import java.util.Map;
 import java.util.Set;
 import java.util.TreeMap;
@@ -33,10 +37,14 @@ public enum  BuyGoods {
 
     }
 
-    public void buyGoods(Map<Integer,Goods> goodsMap,Map<Integer, MyGoods> shoppingCart){
+    public void buyGoods(Map<Integer,Goods> goodsMap,
+                         Map<Integer, MyGoods> shoppingCart,
+                         Map<String,Map<Integer, MyGoods>> userShoopingCart,
+                         User userInfo) throws IOException {
 
         System.out.println("请输入商品编号");
         int no = MyScanner.MY_SCANNER.getInt();
+
 
         boolean isKey = goodsMap.containsKey(no);
 
@@ -54,6 +62,9 @@ public enum  BuyGoods {
         String goodsName = goodsMap.get(no).getName();//获取商品名称
         double goodsPrice = goodsMap.get(no).getPrice();//获取商品的价格
 
+        //将最新的商品列表写入到文件中
+
+
         while (!isBuy){
             System.out.println("请输入购买数目");
              buyNum = MyScanner.MY_SCANNER.getInt();
@@ -69,6 +80,9 @@ public enum  BuyGoods {
             //扣除选择的数目
             goodsMap.get(no).setNumber((num - buyNum));
 
+
+            MyObject.MY_OBJECT.Write(goodsMap,"src/file/goods.txt");
+
             isBuy = true;
 
         }
@@ -80,19 +94,45 @@ public enum  BuyGoods {
              private double price;//商品价格
              private int buyNumber;//商品数量
              private String time;//加入购物车的时间
+             private double money ;//花费的金钱
          *
          *
          */
-
+        Map<Integer, MyGoods> myGoodsMap = new HashMap<>();
+        myGoodsMap = shoppingCart;
             if (shoppingCart.containsKey(no)) {
-                int buyNumber = shoppingCart.get(no).getBuyNumber();
-                shoppingCart.get(no).setBuyNumber((buyNumber + buyNum));//添加商品数目
+
+
+                int buyNumber = myGoodsMap.get(no).getBuyNumber();
+                myGoodsMap.get(no).setBuyNumber((buyNumber + buyNum));//添加商品数目
+                myGoodsMap.get(no).setTime(TimeUtils.TIME_UTILS.getTime());//更新购物时间
+
+
+                userShoopingCart.put(userInfo.getUserName(),myGoodsMap);
+                MyObject.MY_OBJECT.Write(userShoopingCart, "src/file/shoppingCart.txt");
+
+
             } else {
-                shoppingCart.put(no, new MyGoods(no, goodsName, goodsPrice, buyNum, TimeUtils.TIME_UTILS.getTime()));
+
+                myGoodsMap.put(no, new MyGoods(no, goodsName, goodsPrice, buyNum, TimeUtils.TIME_UTILS.getTime()));
+                //实现每个用户对应一个唯一的购物车
+                if (userShoopingCart.containsKey(userInfo.getUserName())){
+
+                    userShoopingCart.put(userInfo.getUserName(),myGoodsMap);
+                    MyObject.MY_OBJECT.Write(userShoopingCart, "src/file/shoppingCart.txt");
+                    System.out.println(userShoopingCart.toString());
+                    System.out.println(shoppingCart.toString());
+                }
+                else {
+                    userShoopingCart.put(userInfo.getUserName(), myGoodsMap);
+                    MyObject.MY_OBJECT.Write(userShoopingCart, "src/file/shoppingCart.txt");
+                    System.out.println(myGoodsMap.toString());
+                    System.out.println(shoppingCart.toString());
+                }
+
+
             }
 
         }
-
-
 
 }

@@ -1,19 +1,18 @@
+import personal.MyGoods;
 import personal.User;
 import store.BuyGoods;
 import store.Goods;
 import utils.MyObject;
 
 import java.io.*;
-import java.util.ArrayList;
-import java.util.Iterator;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 /**
  *
  * 功能测试类2
  *
  * 实现本地文件形式的存储数据，使用序列化和反序列化的方法将对象存储到文件中，并可以将对象从文本中解析出来
+ *
  *
  * @author MiChong
  *
@@ -23,15 +22,15 @@ import java.util.Map;
 public class Test2 {
     public static void main(String[] args) throws IOException, ClassNotFoundException {
 
-        MyObject object = new MyObject();
-        List<User> regist = new ArrayList<>();
+//        MyObject object = new MyObject();
+//        List<User> regist = new ArrayList<>();
 
-        FileWriter fw = new FileWriter("src/file/regist.txt");
+//        FileWriter fw = new FileWriter("src/file/regist.txt");
 
-        //将对象使用序列化的形式写入到文件中
-        ObjectOutputStream ops = new ObjectOutputStream(new FileOutputStream("src/file/regist.txt",true));
-        User user = new User("michong","123456","米虫",21);
-        User user2 = new User("qjzxzxd","123456","米虫",20);
+//        //将对象使用序列化的形式写入到文件中
+//        ObjectOutputStream ops = new ObjectOutputStream(new FileOutputStream("src/file/regist.txt",true));
+//        User user = new User("michong","123456","米虫",21);
+//        User user2 = new User("qjzxzxd","123456","米虫",20);
 
 
 //
@@ -39,15 +38,15 @@ public class Test2 {
  //       ops.writeObject(user2);
 //
 
-        regist.add(user);
-        regist.add(user2);
-
-//        ops.writeObject(regist);
-        object.Write(regist,"src/file/regist.txt");
-
-        ops.close();
-
-        User u = null;
+//        regist.add(user);
+//        regist.add(user2);
+//
+////        ops.writeObject(regist);
+//        object.Write(regist,"src/file/regist.txt");
+//
+//        ops.close();
+//
+//        User u = null;
 
 //        User read1 = object.Read(u, "src/file/regist.txt");
 //        System.out.println(read1);
@@ -116,22 +115,28 @@ public class Test2 {
 
 
 
-        Map<Integer, Goods> read = object.Read(goodsMap, "src/file/goods.txt");
-        BuyGoods.BUY_GOODS.showGoods(read);
+//        Map<Integer, Goods> read = object.Read(goodsMap, "src/file/goods.txt");
+//        BuyGoods.BUY_GOODS.showGoods(read);
+//
+//        List<User> users = object.Read(userList, "src/file/regist.txt");
+////        System.out.println(users.toString());
+//
+//        Iterator<User> iterator = users.iterator();
+//
+//        while (iterator.hasNext()){
+//
+//            User user1 = iterator.next();
+//            System.out.println(user1.toString());
+//        }
 
-        List<User> users = object.Read(userList, "src/file/regist.txt");
-//        System.out.println(users.toString());
-
-        Iterator<User> iterator = users.iterator();
-
-        while (iterator.hasNext()){
-
-            User user1 = iterator.next();
-            System.out.println(user1.toString());
-        }
-
-
-
+//        Map<Integer, MyGoods> shoppingCart = new HashMap<>();
+//        shoppingCart = MyObject.MY_OBJECT.Read(shoppingCart,"src/file/shoppingCart.txt");
+//        System.out.println(shoppingCart.toString());
+        Map<String,Map<Integer, MyGoods>> userShoopingCart = new HashMap<>();
+        userShoopingCart = MyObject.MY_OBJECT.Read(userShoopingCart,"src/file/shoppingCart.txt");
+        System.out.println(userShoopingCart.toString());
+        boolean b = userShoopingCart.containsKey("michong");
+        System.out.println(b);
 
     }
 }

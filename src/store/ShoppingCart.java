@@ -1,9 +1,12 @@
 package store;
 
 import personal.MyGoods;
+import personal.User;
 import show.ShowPage;
+import utils.MyObject;
 import utils.MyScanner;
 
+import java.io.IOException;
 import java.util.*;
 
 /**
@@ -17,11 +20,14 @@ public enum  ShoppingCart {
 
 
     //购物车查看，统计购物车的商品
-    double totalPrice = 0;//商品总价格
-    public void Checkout(Map<Integer, MyGoods> shoppingCart){
+    double totalPrice ;//商品总价格
+    public void Checkout(Map<Integer, MyGoods> shoppingCart) throws IOException {
 
         ShowPage.SHOW_PAGE.showShoppingCart();
 
+//        System.out.println(shoppingCart.toString());
+
+//        shoppingCart = MyObject.MY_OBJECT.Read(shoppingCart,"src/file/shoppingCart.txt");
 
         //重新整理数据，按照时间从现在往之前排序
         if (shoppingCart != null) {
@@ -33,6 +39,9 @@ public enum  ShoppingCart {
                 }
             });
 
+
+
+            totalPrice = 0;//置0
             for (Map.Entry<Integer, MyGoods> e : list) {
 
                 System.out.println(e.getValue().getNo() + "          " + e.getValue().getName() + "        " +
@@ -52,15 +61,20 @@ public enum  ShoppingCart {
 
 
     //确认付款
-    public void goChecking(Map<Integer, MyGoods> shoppingCart){
+    public void goChecking(Map<Integer, MyGoods> shoppingCart, User userInfo,Map<String,Map<Integer, MyGoods>> userShoopingCart) throws IOException {
 
         System.out.println("请输入付款金额：");
         double money = MyScanner.MY_SCANNER.getDouble();
 
+        //用户使用金钱累加
+        userInfo.setMoney((userInfo.getMoney()+totalPrice));
+
         if (money - totalPrice >0){
             System.out.println("找零："+(money - totalPrice));
 
-            shoppingCart = null;
+
+            userShoopingCart.put(userInfo.getUserName(),null);
+            MyObject.MY_OBJECT.Write(userShoopingCart, "src/file/shoppingCart.txt");
 
         }else {
 

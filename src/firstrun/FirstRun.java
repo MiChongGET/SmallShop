@@ -2,6 +2,7 @@ package firstrun;
 
 import personal.MyGoods;
 import store.Goods;
+import utils.MyObject;
 
 import java.io.*;
 import java.util.HashMap;
@@ -90,25 +91,25 @@ public enum FirstRun {
             ops.close();
 
         }
-        else {
-            ObjectInputStream ois2 = new ObjectInputStream(new FileInputStream("src/file/shoppingCart.txt"));
-            while (true){
-
-                try{
-
-                    shoppingCart= (Map<Integer, MyGoods>) ois2.readObject();
-//                    BuyGoods.BUY_GOODS.showGoods(goodsMap);
-                    break;
-                }catch (EOFException E){
-
-                }catch (NullPointerException e){
-
-                } catch (ClassNotFoundException e) {
-                    e.printStackTrace();
-                }
-            }
-
-        }
+//        else {
+//            ObjectInputStream ois2 = new ObjectInputStream(new FileInputStream("src/file/shoppingCart.txt"));
+//            while (true){
+//
+//                try{
+//
+//                    shoppingCart= (Map<Integer, MyGoods>) ois2.readObject();
+////                    BuyGoods.BUY_GOODS.showGoods(goodsMap);
+//                    break;
+//                }catch (EOFException E){
+//
+//                }catch (NullPointerException e){
+//
+//                } catch (ClassNotFoundException e) {
+//                    e.printStackTrace();
+//                }
+//            }
+//
+//        }
         return shoppingCart;
     }
 }

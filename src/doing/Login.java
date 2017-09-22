@@ -1,11 +1,10 @@
 package doing;
 
 import personal.User;
+import utils.MyObject;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.io.IOException;
 import java.util.Map;
-import java.util.Set;
 
 /**
  *
@@ -20,19 +19,19 @@ public enum Login {
 
     LOGIN;
 
-    public boolean setLogin(Map<String,User> users, String name,String passwd){
+    public User userInfo ;
 
-        List<String> names = new ArrayList<>();
-        Set<String> user = users.keySet();
+    public boolean setLogin(Map<String,User> users, String name,String passwd) throws IOException {
 
-        for (String s:user) {
-            names.add(s);
-        }
 
-        if (names.contains(name)){
+        //读取文件中的用户信息
+        Map<String, User> read = MyObject.MY_OBJECT.Read(users, "src/file/regist.txt");
 
-            if (passwd.equals(users.get(name).getPassWord())) {
-                System.out.println("登录成功！   你好:"+users.get(name).getOtherName());
+        if (read.containsKey(name)){
+
+            if (passwd.equals(read.get(name).getPassWord())) {
+                System.out.println("登录成功！   你好:"+read.get(name).getOtherName());
+                userInfo = read.get(name);
 
                 return true;
             }
