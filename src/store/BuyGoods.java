@@ -101,13 +101,9 @@ public enum  BuyGoods {
         Map<Integer, MyGoods> myGoodsMap = new HashMap<>();
         myGoodsMap = shoppingCart;
             if (shoppingCart.containsKey(no)) {
-
-
                 int buyNumber = myGoodsMap.get(no).getBuyNumber();
                 myGoodsMap.get(no).setBuyNumber((buyNumber + buyNum));//添加商品数目
                 myGoodsMap.get(no).setTime(TimeUtils.TIME_UTILS.getTime());//更新购物时间
-
-
                 userShoopingCart.put(userInfo.getUserName(),myGoodsMap);
                 MyObject.MY_OBJECT.Write(userShoopingCart, "src/file/shoppingCart.txt");
 
@@ -120,14 +116,10 @@ public enum  BuyGoods {
 
                     userShoopingCart.put(userInfo.getUserName(),myGoodsMap);
                     MyObject.MY_OBJECT.Write(userShoopingCart, "src/file/shoppingCart.txt");
-                    System.out.println(userShoopingCart.toString());
-                    System.out.println(shoppingCart.toString());
                 }
                 else {
                     userShoopingCart.put(userInfo.getUserName(), myGoodsMap);
                     MyObject.MY_OBJECT.Write(userShoopingCart, "src/file/shoppingCart.txt");
-                    System.out.println(myGoodsMap.toString());
-                    System.out.println(shoppingCart.toString());
                 }
 
 
